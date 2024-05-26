@@ -5,11 +5,17 @@ import { useEffect } from "react";
 
 import { login } from "@/actions/auth";
 import SubmitButton from "@/components/SubmitButton";
+import { useRouter } from "next/router";
 const LoginPage = () => {
   const [state, formAction] = useFormState(login, {});
+  const router = useRouter();
 
   useEffect(() => {
     toast(state?.message, { type: `${state?.status}` });
+    if (state?.status === "success") {
+      loginContext(user);
+      router.push("/");
+    }
   }, [state]);
 
   return (
