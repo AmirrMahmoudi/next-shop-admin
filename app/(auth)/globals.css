@@ -1,0 +1,22 @@
+@import "bootstrap/dist/css/bootstrap.rtl.min.css";
+@import "bootstrap-icons/font/bootstrap-icons.css";
+@import "react-toastify/dist/ReactToastify.css";
+
+@font-face {
+  font-family: "Vazir";
+  src: url("../../public/fonts/Vazir.eot");
+  /* IE9 Compat Modes */
+  src: url("../../public/fonts/Vazir.eot?#iefix") format("embedded-opentype"),
+    url("../../public/fonts/Vazir.woff2") format("woff2"),
+    url("../../public/fonts/Vazir.woff") format("woff"),
+    url("../../public/fonts/Vazir.ttf") format("truetype");
+  /* Safari, Android, iOS */
+}
+
+body {
+  font-family: "Vazir", Arial, Helvetica, sans-serif !important;
+}
+.Toastify__toast-body {
+  font-family: "Vazir", sans-serif !important;
+  direction: rtl;
+}
