@@ -1,7 +1,7 @@
 "use client";
 
-import { me } from "@/actions/auth";
 import { createContext, useEffect, useState } from "react";
+import { me } from "@/actions/auth";
 
 const AuthContext = createContext();
 
@@ -19,9 +19,14 @@ export const AuthProvider = ({ children }) => {
     };
     checkUserLoggedIn();
   }, []);
+  const logoutContext = () => {
+    setUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, logoutContext }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -60,4 +60,19 @@ async function me() {
   }
 }
 
-export { login, me };
+async function logout() {
+  const data = await postFetch("/auth/logout");
+
+  if (data.status === "success") {
+    cookies().delete("token");
+    return {
+      success: "Your are logged out",
+    };
+  } else {
+    return {
+      error: "User Forbidden",
+    };
+  }
+}
+
+export { login, me, logout };
