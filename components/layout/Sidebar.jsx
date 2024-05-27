@@ -1,6 +1,4 @@
-import React from "react";
-
-const Sidebar = () => {
+export default function Sidebar() {
   return (
     <nav
       id="sidebarMenu"
@@ -9,7 +7,11 @@ const Sidebar = () => {
       <div className="position-sticky pt-3">
         <ul className="nav flex-column">
           <li className="nav-item">
-            <a className="nav-link active" aria-current="page" href="index.html">
+            <a
+              className="nav-link active"
+              aria-current="page"
+              href="index.html"
+            >
               <i className="bi bi-grid me-2"></i>
               داشبورد
             </a>
@@ -54,6 +56,4 @@ const Sidebar = () => {
       </div>
     </nav>
   );
-};
-
-export default Sidebar;
+}

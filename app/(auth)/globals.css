@@ -1,5 +1,4 @@
 @import "bootstrap/dist/css/bootstrap.rtl.min.css";
-@import "bootstrap-icons/font/bootstrap-icons.css";
 @import "react-toastify/dist/ReactToastify.css";
 
 @font-face {
@@ -14,8 +13,9 @@
 }
 
 body {
-  font-family: "Vazir", Arial, Helvetica, sans-serif !important;
+  font-family: "Vazir", sans-serif !important;
 }
+
 .Toastify__toast-body {
   font-family: "Vazir", sans-serif !important;
   direction: rtl;

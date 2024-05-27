@@ -1,6 +1,11 @@
-import React from "react";
+"use client";
 
-const Header = () => {
+import AuthContext from "@/context/AuthContext";
+import { useContext } from "react";
+
+export default function Header() {
+  const { user } = useContext(AuthContext);
+
   return (
     <header className="navbar text-center navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
       <a className="navbar-brand col-md-3 col-lg-2 me-0 px-3" href="#">
@@ -20,14 +25,16 @@ const Header = () => {
       <div className="w-100"></div>
       <div className="navbar-nav">
         <div className="nav-item text-nowrap d-flex align-items-center">
-          <span className="nav-link">علی شیخ</span>
-          <a className="nav-link px-3" href="#">
-            خروج
-          </a>
+          {user && (
+            <>
+              <span className="nav-link">{user.name}</span>
+              <a className="nav-link px-3" href="#">
+                خروج
+              </a>
+            </>
+          )}
         </div>
       </div>
     </header>
   );
-};
-
-export default Header;
+}
