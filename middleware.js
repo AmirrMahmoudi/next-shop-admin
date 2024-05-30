@@ -9,5 +9,13 @@ export function middleware(req) {
 }
 
 export const config = {
-  matcher: ["/"],
+  matcher: [
+    "/",
+    "/users/:path*",
+    "/products/:path*",
+    "/ctegories/:path*",
+    "/orders/:path*",
+    "/transactions/:path*",
+    "/coupons/:path*",
+  ],
 };
