@@ -3,7 +3,7 @@ import Link from "next/link";
 import Paginate from "../Paginate";
 
 const Table = async ({ params }) => {
-  const data = await getFetch(`/users${params}`);
+  const data = await getFetch(`/users?${params}`);
 
   return (
     <>
