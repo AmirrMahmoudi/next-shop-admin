@@ -1,8 +1,9 @@
 "use server";
 
-import { postFetch } from "@/utils/fetch";
+import { deleteFetch, postFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 
 const createUser = async (state, formData) => {
   const name = formData.get("name");
@@ -54,4 +55,26 @@ const createUser = async (state, formData) => {
   }
 };
 
-export { createUser };
+const deleteUser = async (state, formData) => {
+  const id = formData.get("id");
+  if (id === "" || id == null) {
+    return {
+      status: "error",
+      message: "شناسه کاربر الزامی است.",
+    };
+  }
+
+  const data = await deleteFetch(`/users/${id}`, {});
+
+  if (data.status === "success") {
+    revalidatePath("/users");
+    redirect("/users");
+  } else {
+    return {
+      status: data.status,
+      message: handleError(data.message),
+    };
+  }
+};
+
+export { createUser, deleteUser };

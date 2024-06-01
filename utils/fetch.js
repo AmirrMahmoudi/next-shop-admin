@@ -49,4 +49,19 @@ const postFetchUnauth = async (url, body) => {
   return await res.json();
 };
 
-export { getFetch, postFetch, postFetchUnauth };
+const deleteFetch = async (url) => {
+  const token = cookies().get("token");
+  const res = await fetch(`${process.env.API_URL}${url}`, {
+    cache: "no-store",
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${token.value}`,
+    },
+  });
+
+  return await res.json();
+};
+
+export { getFetch, postFetch, postFetchUnauth, deleteFetch };

@@ -1,3 +1,4 @@
+import DeleteUser from "@/components/users/Delete";
 import { getFetch } from "@/utils/fetch";
 
 const UserPage = async ({ params }) => {
@@ -11,7 +12,7 @@ const UserPage = async ({ params }) => {
         <h4 className="fw-bold">کاربر : {user.name}</h4>
       </div>
 
-      <form className="row gy-4">
+      <div className="row gy-4">
         <div className="col-md-3">
           <label className="form-label">نام</label>
           <input
@@ -39,11 +40,8 @@ const UserPage = async ({ params }) => {
             placeholder={user.cellphone}
           />
         </div>
-
-        <div>
-          <button className="btn btn-dark mt-3">حذف</button>
-        </div>
-      </form>
+        <DeleteUser id={user.id} />
+      </div>
     </>
   );
 };
