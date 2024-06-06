@@ -1,5 +1,6 @@
 "use server";
 
+import { deleteFetch } from "@/utils/fetch";
 import { handleError } from "@/utils/helper";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
@@ -75,4 +76,26 @@ const createProduct = async (state, formData) => {
   }
 };
 
-export { createProduct };
+const deleteProduct = async (state, formData) => {
+  const id = formData.get("id");
+  if (id === "" || id == null) {
+    return {
+      status: "error",
+      message: "شناسه محصول الزامی است.",
+    };
+  }
+
+  const data = await deleteFetch(`/products/${id}`, {});
+
+  if (data.status === "success") {
+    revalidatePath("/products");
+    redirect("/products");
+  } else {
+    return {
+      status: data.status,
+      message: handleError(data.message),
+    };
+  }
+};
+
+export { createProduct, deleteProduct };

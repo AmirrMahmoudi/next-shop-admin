@@ -76,6 +76,7 @@ const deleteUser = async (state, formData) => {
     };
   }
 };
+
 const editUser = async (state, formData) => {
   const name = formData.get("name");
   const email = formData.get("email");
@@ -131,5 +132,13 @@ const editUser = async (state, formData) => {
     };
   }
 };
+
+
+
+
+
+
+
+
 
 export { createUser, deleteUser, editUser };
