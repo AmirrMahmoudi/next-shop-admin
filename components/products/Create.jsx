@@ -1,6 +1,15 @@
 "use client";
 
+import DatePicker from "react-multi-date-picker";
+import DatePanel from "react-multi-date-picker/plugins/date_panel";
+import TimePicker from "react-multi-date-picker/plugins/time_picker";
+import persian from "react-date-object/calendars/persian";
+import gregorian from "react-date-object/calendars/gregorian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import gregorian_en from "react-date-object/locales/gregorian_en";
+
 import { toast } from "react-toastify";
+
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useFormState } from "react-dom";
@@ -13,6 +22,7 @@ const CreateProduct = ({ categories }) => {
   const router = useRouter();
   const [image, setImage] = useState(null);
   const primaryImageRef = useRef();
+  const [dateOnSale, setDateOnSale] = useState([]);
 
   useEffect(() => {
     toast(state?.message, { type: `${state?.status}` });
@@ -32,6 +42,16 @@ const CreateProduct = ({ categories }) => {
       setImage(render.result.toString());
     };
   };
+
+  const changeDateOnSell = (value) => {
+    if (value.length == 2) {
+      setDateOnSale([
+        value[0].convert(gregorian, gregorian_en).format("YYYY-MM-DD HH:mm:ss"),
+        value[1].convert(gregorian, gregorian_en).format("YYYY-MM-DD HH:mm:ss"),
+      ]);
+    }
+  };
+
   return (
     <form action={formAction} className="row gy-4">
       <div className="col-md-12 mb-5">
@@ -115,6 +135,35 @@ const CreateProduct = ({ categories }) => {
       <div className="col-md-3">
         <label className="form-label">قیمت حراجی</label>
         <input type="sale_price" name="name" className="form-control" />
+      </div>
+
+      <div className="col-md-3">
+        <label className="form-label text-nowrap">
+          تاریخ شروع و پایان حراجی
+        </label>
+        <DatePicker
+          inputClass="form-control"
+          range
+          calendar={persian}
+          locale={persian_fa}
+          onChange={changeDateOnSell}
+          format="YYYY-MM-DD HH:mm:ss"
+          plugins={[
+            <TimePicker position="bottom" />,
+            // <DatePanel markFocused />,
+          ]}
+        />
+        <input name="data_on_sale_form" value={dateOnSale[0]} type="hidden" />
+        <input name="data_on_sale_form" value={dateOnSale[1]} type="hidden" />
+      </div>
+
+      <div className="col-md-12">
+        <label className="form-label">توضیحات</label>
+        <textarea
+          rows="5"
+          name="description"
+          className="form-control"
+        ></textarea>
       </div>
 
       <div>

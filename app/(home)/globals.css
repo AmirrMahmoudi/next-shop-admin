@@ -139,7 +139,10 @@ body {
   cursor: pointer;
 }
 .Toastify__toast-body {
-    font-family: "Vazir", sans-serif !important;
-    direction: rtl;
-  }
-  
+  font-family: "Vazir", sans-serif !important;
+  direction: rtl;
+}
+
+.rmdp-container {
+  width: 100%;
+}
