@@ -4,7 +4,6 @@ import { getFetch } from "@/utils/fetch";
 const CreateProductPage = async () => {
   const categories = await getFetch("/categories-list");
 
-  //   console.log(categories);
 
   return (
     <>
