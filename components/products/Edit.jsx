@@ -16,11 +16,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import SubmitButton from "@/components/SubmitButton";
-import { createProduct } from "@/actions/products";
+import { edtiProduct } from "@/actions/products";
 import { getBlurDataURL } from "@/utils/helper";
 
 const EditProduct = ({ product, categories }) => {
-  const [state, formAction] = useFormState(createProduct, {});
+  const [state, formAction] = useFormState(edtiProduct, {});
   const router = useRouter();
   const [image, setImage] = useState(null);
   const primaryImageRef = useRef();
@@ -235,9 +235,12 @@ const EditProduct = ({ product, categories }) => {
         ></textarea>
       </div>
 
+      <input type="hidden" name="id" defaultValue={product.id} />
+      <input type="hidden" name="_method" defaultValue={"PUT"} />
+
       <div>
         <SubmitButton
-          title="ایجاد محصول"
+          title="ویرایش محصول"
           style="btn btn-outline-dark mt-3 mb-5"
         />
       </div>
