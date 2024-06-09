@@ -5,11 +5,9 @@ import { handleError } from "@/utils/helper";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-const createUser = async (state, formData) => {
+const createCategory = async (state, formData) => {
   const name = formData.get("name");
-  const email = formData.get("email");
-  const cellphone = formData.get("cellphone");
-  const password = formData.get("password");
+  const description = formData.get("description");
 
   if (name === "") {
     return {
@@ -17,35 +15,20 @@ const createUser = async (state, formData) => {
       message: "فیلد نام کاربر الزامی است",
     };
   }
-  if (email === "") {
+  if (description === "") {
     return {
       status: "error",
-      message: "فیلد ایمیل کاربر الزامی است.",
+      message: "فیلد توضیحات کاربر الزامی است.",
     };
   }
 
-  const pattern = /^(\+98|0)?9\d{9}$/i;
-  if (cellphone === "" || !pattern.test(cellphone)) {
-    return {
-      status: "error",
-      message: "فیلد شماره تماس کاربر نامعتبر است.",
-    };
-  }
-
-  if (password === "") {
-    return {
-      status: "error",
-      message: "فیلد رمز عبور کاربر الزامی است.",
-    };
-  }
-
-  const data = await postFetch("/users", { name, email, cellphone, password });
+  const data = await postFetch("/categories", { name, description });
 
   if (data.status === "success") {
-    revalidatePath("/users");
+    revalidatePath("/categories");
     return {
       status: data.status,
-      message: "کاربر مورد نظر ایجاد شد",
+      message: "دسته بندی مورد نظر ایجاد شد",
     };
   } else {
     return {
@@ -77,53 +60,42 @@ const deleteCategory = async (state, formData) => {
   }
 };
 
-const editUser = async (state, formData) => {
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const cellphone = formData.get("cellphone");
-  const password = formData.get("password");
+const editCategory = async (state, formData) => {
   const id = formData.get("id");
+  const name = formData.get("name");
+  const description = formData.get("description");
 
   if (id === "" || id == null) {
     return {
       status: "error",
-      message: "شناسه کاربر الزامی است.",
+      message: "شناسه دسته بندی الزامی است.",
     };
   }
 
   if (name === "") {
     return {
       status: "error",
-      message: "فیلد نام کاربری الزامی است.",
+      message: "فیلد نام دسته بندی الزامی است.",
     };
   }
 
-  if (email === "") {
+  if (description === "") {
     return {
       status: "error",
-      message: "فیلد ایمیل کاربر الزامی است.",
-    };
-  }
-  const pattern = /^(\+98|0)?9\d{9}$/i;
-  if (cellphone === "" || !pattern.test(cellphone)) {
-    return {
-      status: "error",
-      message: "فیلد شماره تماس کاربر نامعتبر است.",
+      message: "فیلد توضیحات کاربر الزامی است.",
     };
   }
 
-  const data = await putFetch(`/users/${id}`, {
+  const data = await putFetch(`/categories/${id}`, {
     name,
-    email,
-    cellphone,
-    password,
+    description,
   });
 
   if (data.status === "success") {
-    revalidatePath("/users");
+    revalidatePath("/categories");
     return {
       status: data.status,
-      message: "کاربر مورد نظر ویرایش شد.",
+      message: "دسته بندی مورد نظر ویرایش شد.",
     };
   } else {
     return {
@@ -133,4 +105,4 @@ const editUser = async (state, formData) => {
   }
 };
 
-export { createUser, deleteCategory, editUser };
+export { createCategory, deleteCategory, editCategory };
