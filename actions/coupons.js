@@ -6,46 +6,41 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 const createCoupon = async (state, formData) => {
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const cellphone = formData.get("cellphone");
-  const password = formData.get("password");
+  const code = formData.get("code");
+  const percentage = formData.get("percentage");
+  const expired_at = formData.get("expired_at");
 
-  if (name === "") {
+  if (code === "") {
     return {
       status: "error",
-      message: "فیلد نام کاربر الزامی است",
+      message: "فیلد کد تخفیف الزامی است",
     };
   }
-  if (email === "") {
+  if (percentage === "") {
     return {
       status: "error",
-      message: "فیلد ایمیل کاربر الزامی است.",
-    };
-  }
-
-  const pattern = /^(\+98|0)?9\d{9}$/i;
-  if (cellphone === "" || !pattern.test(cellphone)) {
-    return {
-      status: "error",
-      message: "فیلد شماره تماس کاربر نامعتبر است.",
+      message: "فیلد درصد الزامی است.",
     };
   }
 
-  if (password === "") {
+  if (expired_at === "") {
     return {
       status: "error",
-      message: "فیلد رمز عبور کاربر الزامی است.",
+      message: "فیلد تاریخ انقضا الزامی است.",
     };
   }
 
-  const data = await postFetch("/users", { name, email, cellphone, password });
+  const data = await postFetch("/coupons", {
+    code,
+    percentage,
+    expired_at,
+  });
 
   if (data.status === "success") {
-    revalidatePath("/users");
+    revalidatePath("/coupons");
     return {
       status: data.status,
-      message: "کاربر مورد نظر ایجاد شد",
+      message: "کد تخفیف مورد نظر ایجاد شد",
     };
   } else {
     return {
@@ -78,52 +73,44 @@ const deleteCoupon = async (state, formData) => {
 };
 
 const editCoupon = async (state, formData) => {
-  const name = formData.get("name");
-  const email = formData.get("email");
-  const cellphone = formData.get("cellphone");
-  const password = formData.get("password");
   const id = formData.get("id");
+  const code = formData.get("code");
+  const percentage = formData.get("percentage");
+  const expired_at = formData.get("expired_at");
 
-  if (id === "" || id == null) {
+  if (id === "" || id === null) {
     return {
       status: "error",
-      message: "شناسه کاربر الزامی است.",
+      message: "شناسه کد تخفیف الزامی است",
     };
   }
 
-  if (name === "") {
+  if (code === "") {
     return {
       status: "error",
-      message: "فیلد نام کاربری الزامی است.",
+      message: "فیلد کد تخفیف الزامی است",
     };
   }
 
-  if (email === "") {
+  if (percentage === "") {
     return {
       status: "error",
-      message: "فیلد ایمیل کاربر الزامی است.",
-    };
-  }
-  const pattern = /^(\+98|0)?9\d{9}$/i;
-  if (cellphone === "" || !pattern.test(cellphone)) {
-    return {
-      status: "error",
-      message: "فیلد شماره تماس کاربر نامعتبر است.",
+      message: "فیلد درصد الزامی است",
     };
   }
 
-  const data = await putFetch(`/users/${id}`, {
-    name,
-    email,
-    cellphone,
-    password,
+  const data = await putFetch(`/coupons/${id}`, {
+    code,
+    percentage,
+    expired_at,
   });
 
   if (data.status === "success") {
-    revalidatePath("/users");
+    revalidatePath("/coupons");
+
     return {
       status: data.status,
-      message: "کاربر مورد نظر ویرایش شد.",
+      message: "کد تخفیف مورد نظر ویرایش شد",
     };
   } else {
     return {
